@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "8u9hQflql/VrGA3p4oZfdlhzEqtY74xzs7iiEEuFiLo=",
+  "Source": "ApiPokemons",
+  "BasePath": "_content/ApiPokemons",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
