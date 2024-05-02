@@ -1,6 +1,6 @@
 ﻿namespace ApiPokemons.Repositorios
 {
-    public class PokemonService
+    public class MestrePokemonService 
     {
     }
 }
