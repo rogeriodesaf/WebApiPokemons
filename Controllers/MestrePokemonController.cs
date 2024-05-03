@@ -9,10 +9,10 @@ namespace ApiPokemons.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MestrePokemon : ControllerBase
+    public class MestrePokemonController : ControllerBase
     {
         private readonly IMestrePokemonInterface _mestrePokemonInterface;
-        public MestrePokemon(IMestrePokemonInterface mestrePokemonInterface)
+        public MestrePokemonController(IMestrePokemonInterface mestrePokemonInterface)
         {
             _mestrePokemonInterface = mestrePokemonInterface;   
         }

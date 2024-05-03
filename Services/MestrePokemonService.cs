@@ -40,17 +40,18 @@ namespace ApiPokemons.Repositorios
 
             try
             {
-                var mestrePokemon = new MestrePokemonModel();
-                {
-                    mestrePokemon.Nome = mestrePokemonCriacaoDto.Nome;
-                    mestrePokemon.Ginasio = mestrePokemonCriacaoDto.Ginasio;
-                }
-                if(mestrePokemon == null)
+               
+                 var mestrePokemon = new MestrePokemonModel();
+                 {
+                   mestrePokemon.Nome = mestrePokemonCriacaoDto.Nome;
+                  mestrePokemon.Ginasio = mestrePokemonCriacaoDto.Ginasio;
+                 }
+                if (mestrePokemon == null)
                 {
                     resposta.Mensagem = "Não foi possivel criar o mestre Pokemom";
                     resposta.Status = false;
                     return resposta;
-                }  
+                }
                 _context.MestrePokemon.Add(mestrePokemon);
                 await _context.SaveChangesAsync();
                 resposta.Dados =  _context.MestrePokemon.ToList();

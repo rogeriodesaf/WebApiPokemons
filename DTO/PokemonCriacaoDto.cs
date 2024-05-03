@@ -1,4 +1,6 @@
-﻿namespace ApiPokemons.DTO
+﻿using ApiPokemons.Models;
+
+namespace ApiPokemons.DTO
 {
     public class PokemonCriacaoDto
     {
