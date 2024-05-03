@@ -17,9 +17,31 @@ namespace ApiPokemons.Repositorios
             throw new NotImplementedException();
         }
 
-        public Task<ResponseModel<List<PokemonModel>>> getPokemon()
+        public async Task<ResponseModel<List<PokemonModel>>> getPokemon()
         {
-            throw new NotImplementedException();
+            ResponseModel<List<PokemonModel>> resposta = new ResponseModel<List<PokemonModel>>();
+            try
+            {
+              var pokemons = await _context.Pokemons.ToListAsync();
+                if(pokemons is null)
+                {
+                    resposta.Mensagem = "nenhum pokemon encontrado";
+                    resposta.Status = false;
+                    return resposta;
+                }
+
+
+                resposta.Dados = await _context.Pokemons.Include(a=>a.MestrePokemon).ToListAsync();
+                resposta.Mensagem = "Lista de pokemons retornada com sucesso";
+            }
+            catch (Exception ex)
+            {
+
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
+            }
+            return resposta;
         }
 
         public Task<ResponseModel<PokemonModel>> getPokemonById(int id)

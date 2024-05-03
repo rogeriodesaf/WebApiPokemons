@@ -22,5 +22,12 @@ namespace ApiPokemons.Controllers
             return Ok(pokemon);
         }
 
+        [HttpGet("ListarPokemons")]
+        public async Task<ActionResult<List<PokemonModel>>> getPokemon()
+        {
+            var pokemon = await _pokemonInterface.getPokemon(); 
+            return Ok(pokemon);
+        }
+
     }
 }
