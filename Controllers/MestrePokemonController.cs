@@ -14,14 +14,22 @@ namespace ApiPokemons.Controllers
         private readonly IMestrePokemonInterface _mestrePokemonInterface;
         public MestrePokemonController(IMestrePokemonInterface mestrePokemonInterface)
         {
-            _mestrePokemonInterface = mestrePokemonInterface;   
+            _mestrePokemonInterface = mestrePokemonInterface;
         }
-[HttpPost("CriarMestrePokemon")]
+        [HttpPost("CriarMestrePokemon")]
         public async Task<ActionResult<ResponseModel<List<MestrePokemonModel>>>> postMestrePokemon(MestrePokemonCriacaoDto mestrePokemonCriacaoDto)
         {
             var mestresPokemon = await _mestrePokemonInterface.postMestrePokemon(mestrePokemonCriacaoDto);
             return Ok(mestresPokemon);
         }
+
+        [HttpGet("ListarTreinadores")]
+        public async Task<ActionResult<ResponseModel<List<MestrePokemonModel>>>> getMestrePokemon()
+        {
+            var mestresPokemon = await _mestrePokemonInterface.getMestrePokemon();
+            return Ok(mestresPokemon);
+        }
+
 
     }
 }

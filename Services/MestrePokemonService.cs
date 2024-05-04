@@ -24,10 +24,31 @@ namespace ApiPokemons.Repositorios
             throw new NotImplementedException();
         }
 
-        public Task<ResponseModel<List<MestrePokemonModel>>> getMestrePokemon()
+        public async Task<ResponseModel<List<MestrePokemonModel>>> getMestrePokemon()
         {
-            throw new NotImplementedException();
-        }
+            ResponseModel<List<MestrePokemonModel>> resposta = new ResponseModel<List<MestrePokemonModel>>();
+            try
+            {
+                var treinadores =  _context.MestrePokemon.ToList();
+                if(treinadores is null)
+                {
+                    resposta.Mensagem = "Nenhum treinador encontrado";
+                    resposta.Status = false;
+                    return resposta;
+                }
+
+                resposta.Dados =  _context.MestrePokemon.ToList();
+                resposta.Mensagem = "Dados retornados com sucesso";
+            }
+            catch (Exception ex)
+            {
+
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
+            }
+            return resposta;
+        }   
 
         public Task<ResponseModel<MestrePokemonModel>> getMestrePokemonById(int id)
         {

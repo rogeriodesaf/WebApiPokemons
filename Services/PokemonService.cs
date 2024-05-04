@@ -44,9 +44,31 @@ namespace ApiPokemons.Repositorios
             return resposta;
         }
 
-        public Task<ResponseModel<PokemonModel>> getPokemonById(int id)
+        public async  Task<ResponseModel<PokemonModel>> getPokemonById(int id)
         {
-            throw new NotImplementedException();
+            ResponseModel<PokemonModel> resposta = new ResponseModel<PokemonModel>();
+            try
+            {
+                var pokemon = await _context.Pokemons.FirstOrDefaultAsync(a => a.Id == id);
+                if(pokemon == null)
+                {
+                    resposta.Mensagem = "Não foram encontrados pokemons com esse Id";
+                    resposta.Status=false;
+                    return resposta;
+                }
+
+                resposta.Dados = pokemon;
+                resposta.Mensagem = "Pokemon encontrado com sucesso!";
+               
+            }
+            catch (Exception ex)
+            {
+
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
+            }
+            return resposta;
         }
 
         public Task<ResponseModel<List<PokemonModel>>> getPokemonByMestreId(int id)

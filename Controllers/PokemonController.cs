@@ -28,6 +28,11 @@ namespace ApiPokemons.Controllers
             var pokemon = await _pokemonInterface.getPokemon(); 
             return Ok(pokemon);
         }
+        [HttpGet("GetPokemonById/{id}")]
+        public async Task<ActionResult<ResponseModel<PokemonModel>>> getPokemonById(int id)
+        {
+            return Ok(await _pokemonInterface.getPokemonById(id));  
+        }
 
     }
 }
