@@ -38,6 +38,11 @@ namespace ApiPokemons.Controllers
            
         }
 
+        [HttpPut("EditarTreinadorPokemon")]
+        public async Task<ActionResult<ResponseModel<MestrePokemonModel>>> putMestrePokemon(MestrePokemonEdicaoDto mestrePokemonEdicaoDto)
+        {
+            return Ok(await _mestrePokemonInterface.putMestrePokemon(mestrePokemonEdicaoDto));  
+        }
       
         
        

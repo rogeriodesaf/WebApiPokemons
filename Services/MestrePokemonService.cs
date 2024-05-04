@@ -3,6 +3,7 @@ using ApiPokemons.DTO;
 using ApiPokemons.DTO.MestrePokemonDTO;
 using ApiPokemons.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiPokemons.Repositorios
 {
@@ -113,9 +114,39 @@ namespace ApiPokemons.Repositorios
             }
         }
 
-        public Task<ResponseModel<List<MestrePokemonModel>>> putPokemon(MestrePokemonEdicaoDto mestrePokemonEdicaoDto)
+        public async Task<ResponseModel<List<MestrePokemonModel>>> putMestrePokemon(MestrePokemonEdicaoDto mestrePokemonEdicaoDto)
         {
-            throw new NotImplementedException();
+            ResponseModel<List<MestrePokemonModel>> resposta = new ResponseModel<List<MestrePokemonModel>>();
+            try
+            {
+                var treinador = await _context.MestrePokemon
+                    .FirstOrDefaultAsync(a => a.Id == mestrePokemonEdicaoDto.Id);
+                if(treinador == null)
+                {
+                    resposta.Mensagem = "Treinador não encontrado!";
+                    resposta.Status=false;
+                    return resposta;
+                }
+
+                treinador.Nome = mestrePokemonEdicaoDto.Nome;
+                treinador.Ginasio = mestrePokemonEdicaoDto.Ginasio;
+
+
+                _context.Update(treinador);
+                await _context.SaveChangesAsync();
+
+                resposta.Dados = await _context.MestrePokemon.ToListAsync();
+                resposta.Mensagem = "Treinador editado com sucesso!";
+                
+            }
+            catch (Exception ex)
+            {
+
+                resposta.Mensagem = ex.Message;
+                resposta.Status= false;
+                return resposta;
+            }
+            return resposta;
         }
     }
 }

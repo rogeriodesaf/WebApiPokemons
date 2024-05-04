@@ -15,7 +15,7 @@ namespace ApiPokemons.Repositorios
 
         public Task<ResponseModel<List<MestrePokemonModel>>> postMestrePokemon(MestrePokemonCriacaoDto mestrePokemonCriacaoDto);
 
-        public Task<ResponseModel<List<MestrePokemonModel>>> putPokemon(MestrePokemonEdicaoDto mestrePokemonEdicaoDto);
+        public Task<ResponseModel<List<MestrePokemonModel>>> putMestrePokemon(MestrePokemonEdicaoDto mestrePokemonEdicaoDto);
 
         public Task<ResponseModel<List<MestrePokemonModel>>> deleteMestrePokemon(int id);
 
