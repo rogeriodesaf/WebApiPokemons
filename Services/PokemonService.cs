@@ -12,9 +12,35 @@ namespace ApiPokemons.Repositorios
         {
             _context = context;
         }
-        public Task<ResponseModel<List<PokemonModel>>> deletePokemon(int id)
+        public async Task<ResponseModel<List<PokemonModel>>> deletePokemon(int id)
         {
-            throw new NotImplementedException();
+            ResponseModel<List<PokemonModel>> resposta = new ResponseModel<List<PokemonModel>>();
+            try
+            {
+                var pokemon = await _context.Pokemons
+                    .FirstOrDefaultAsync(a => a.Id == id);
+                if(pokemon == null)
+                {
+                    resposta.Mensagem = "Pokemon não encontrado";
+                    resposta.Status = false;
+                    return resposta;
+                }
+
+                _context.Remove(pokemon);
+                await _context.SaveChangesAsync();
+
+                resposta.Dados = await _context.Pokemons.Include(a => a.MestrePokemon)
+                    .ToListAsync();
+                resposta.Mensagem = "Pokemon deletado com sucesso!";
+            }
+            catch (Exception ex)
+            {
+
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
+            }
+            return resposta;
         }
 
         public async Task<ResponseModel<List<PokemonModel>>> getPokemon()

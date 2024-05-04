@@ -25,18 +25,29 @@ namespace ApiPokemons.Controllers
         [HttpGet("ListarPokemons")]
         public async Task<ActionResult<List<PokemonModel>>> getPokemon()
         {
-            var pokemon = await _pokemonInterface.getPokemon(); 
+            var pokemon = await _pokemonInterface.getPokemon();
             return Ok(pokemon);
         }
         [HttpGet("GetPokemonById/{id}")]
         public async Task<ActionResult<ResponseModel<PokemonModel>>> getPokemonById(int id)
         {
-            return Ok(await _pokemonInterface.getPokemonById(id));  
+            return Ok(await _pokemonInterface.getPokemonById(id));
         }
         [HttpPut("EditarPokemon")]
         public async Task<ActionResult<ResponseModel<List<PokemonModel>>>> putPokemon(PokemonEdicaoDto pokemonEdicaoDto)
         {
             return Ok(await _pokemonInterface.putPokemon(pokemonEdicaoDto));
         }
+        [HttpDelete("DeletePokemon/{id}")]
+        public async Task<ActionResult<List<PokemonModel>>> deletePokemon(int id)
+        {
+            var resposta = await _pokemonInterface.deletePokemon(id);
+            if(resposta.Dados is null)
+            {
+                return NotFound(resposta.Mensagem);
+            }
+            return Ok(resposta.Dados);
+        }
+
     }
 }
