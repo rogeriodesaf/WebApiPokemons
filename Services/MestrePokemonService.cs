@@ -2,6 +2,7 @@
 using ApiPokemons.DTO;
 using ApiPokemons.DTO.MestrePokemonDTO;
 using ApiPokemons.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ApiPokemons.Repositorios
 {
@@ -50,9 +51,33 @@ namespace ApiPokemons.Repositorios
             return resposta;
         }   
 
-        public Task<ResponseModel<MestrePokemonModel>> getMestrePokemonById(int id)
+        public async Task<ResponseModel<MestrePokemonModel>> getMestrePokemonById(int id)
         {
-            throw new NotImplementedException();
+            ResponseModel<MestrePokemonModel> resposta = new ResponseModel<MestrePokemonModel>();
+
+            try
+            {
+                var treinador =  _context.MestrePokemon.FirstOrDefault(a => a.Id == id);
+                if(treinador is null)
+                {
+                    resposta.Mensagem = "Nenhum treinador pokemon encontrado!";
+                    resposta.Status=false;
+                    return resposta;
+                }
+
+                resposta.Dados = treinador;
+                resposta.Mensagem = "Treinador Pokemon encontrado com sucesso!";
+               
+
+            }
+            catch (Exception ex)
+            {
+
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
+            }
+            return resposta;
         }
 
         public async Task<ResponseModel<List<MestrePokemonModel>>> postMestrePokemon(MestrePokemonCriacaoDto mestrePokemonCriacaoDto)

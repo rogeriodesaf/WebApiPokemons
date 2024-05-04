@@ -30,6 +30,14 @@ namespace ApiPokemons.Controllers
             return Ok(mestresPokemon);
         }
 
+        [HttpGet("PegarTreinadorPokemonPorId/{id}")]
+        public async Task<ActionResult<ResponseModel<MestrePokemonModel>>> getMestrePokemonById(int id)
+        {
+            return Ok( await _mestrePokemonInterface.getMestrePokemonById(id));
+            
+           
+        }
+       
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ApiPokemons.DTO.MestrePokemonDTO;
 using ApiPokemons.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ApiPokemons.Repositorios
 {
