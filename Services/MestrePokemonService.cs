@@ -121,10 +121,9 @@ namespace ApiPokemons.Repositorios
             {
                 var treinador = await _context.MestrePokemon
                     .FirstOrDefaultAsync(a => a.Id == mestrePokemonEdicaoDto.Id);
-                if(treinador == null)
+               if(treinador is null)
                 {
-                    resposta.Mensagem = "Treinador não encontrado!";
-                    resposta.Status=false;
+                    resposta.Mensagem = "Treinador não encontrado";
                     return resposta;
                 }
 
