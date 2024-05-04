@@ -117,10 +117,38 @@ namespace ApiPokemons.Repositorios
 
             return resposta;
         }
-
-        public Task<ResponseModel<List<PokemonModel>>> putPokemon(PokemonEdicaoDto pokemonEdicaoDto)
+ public async Task<ResponseModel<List<PokemonModel>>> putPokemon(PokemonEdicaoDto pokemonEdicaoDto)
         {
-            throw new NotImplementedException();
+            ResponseModel<List<PokemonModel>> resposta = new ResponseModel<List<PokemonModel>>();
+            try
+            {
+                   var pokemon = await _context.Pokemons
+                    .FirstOrDefaultAsync(a => a.Id == pokemonEdicaoDto.Id);
+                if(pokemon == null)
+                {
+                    resposta.Mensagem = "Nenhum pokemon encontrado";
+                    resposta.Status= false;
+                    return resposta;
+                }
+
+                pokemon.Nome = pokemonEdicaoDto.Nome;
+                pokemon.Tipo = pokemonEdicaoDto.Tipo;
+
+                 _context.Update(pokemon);
+                await _context.SaveChangesAsync();  
+
+                resposta.Dados = await _context.Pokemons.Include(a =>a.MestrePokemon)
+                    .ToListAsync();
+
+                resposta.Mensagem = "Pokemon editado com sucesso!";
+            }
+            catch (Exception ex)
+            {
+                 resposta.Mensagem = ex.Message;
+                 resposta.Status = false;
+                return resposta;
+            }
+            return resposta;
         }
     }
 }

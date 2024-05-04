@@ -33,6 +33,10 @@ namespace ApiPokemons.Controllers
         {
             return Ok(await _pokemonInterface.getPokemonById(id));  
         }
-
+        [HttpPut("EditarPokemon")]
+        public async Task<ActionResult<ResponseModel<List<PokemonModel>>>> putPokemon(PokemonEdicaoDto pokemonEdicaoDto)
+        {
+            return Ok(await _pokemonInterface.putPokemon(pokemonEdicaoDto));
+        }
     }
 }
