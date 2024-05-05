@@ -16,9 +16,35 @@ namespace ApiPokemons.Repositorios
         {
             _context = context;
         }
-        public Task<ResponseModel<List<MestrePokemonModel>>> deleteMestrePokemon(int id)
+        public async  Task<ResponseModel<List<MestrePokemonModel>>> deleteMestrePokemon(int id)
         {
-            throw new NotImplementedException();
+            ResponseModel<List<MestrePokemonModel>> resposta = new ResponseModel<List<MestrePokemonModel>>();
+
+            try
+            {
+                var treinador = await _context.MestrePokemon
+                    .FirstOrDefaultAsync(a => a.Id == id);
+                if(treinador is null)
+                {
+                    resposta.Mensagem = "Treinador Pokemon não encontrado!";
+                    resposta.Status = false;
+                    return resposta;
+                }
+
+                _context.Remove(treinador);
+                await _context.SaveChangesAsync();
+
+                resposta.Dados = await _context.MestrePokemon.ToListAsync();
+                resposta.Mensagem = "Treinador Pokemon deletado com sucesso!";
+            }
+            catch (Exception ex)
+            {
+
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
+            }
+            return resposta;
         }
 
         public Task<ResponseModel<List<MestrePokemonModel>>> getMestreokemonByPokemonId(int id)

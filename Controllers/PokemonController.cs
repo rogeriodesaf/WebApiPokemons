@@ -49,5 +49,16 @@ namespace ApiPokemons.Controllers
             return Ok(resposta.Dados);
         }
 
+        [HttpGet("GetPokemonByTreinadorId/{id}")]
+        public async Task<ActionResult<List<PokemonModel>>> getPokemonByMestreId(int id)
+        {
+            var pokemon = await _pokemonInterface.getPokemonByMestreId(id); 
+            if(pokemon.Dados == null)
+            {
+                return NotFound(pokemon.Mensagem);
+            }
+           return   Ok(pokemon);
+        }
+
     }
 }

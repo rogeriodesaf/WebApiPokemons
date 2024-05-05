@@ -49,9 +49,19 @@ namespace ApiPokemons.Controllers
             return Ok(await _mestrePokemonInterface.putMestrePokemon(mestrePokemonEdicaoDto));
         }
 
-
-             
+        [HttpDelete("DeletarTreinadorPokemon/{id}")]
+        public async  Task<ActionResult<ResponseModel<List<MestrePokemonModel>>>>deleteMestrePokemon(int id)
+        {
+            var resposta = await _mestrePokemonInterface.deleteMestrePokemon(id);
+            if(resposta.Dados is null)
+            {
+                return NotFound(resposta.Mensagem);
+            }
+            return Ok(resposta);
         }
+       
+
+    }
       
         
        
